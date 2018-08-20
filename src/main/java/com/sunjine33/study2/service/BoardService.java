@@ -7,7 +7,7 @@ import com.sunjine33.study2.domain.BoardVO;
 public interface BoardService {
 		public void regist(BoardVO boardvo) throws Exception;
 		
-		public BoardVO read(Integer boardvo) throws Exception;
+		public BoardVO read(Integer bno) throws Exception;
 		
 		public void modify(BoardVO boardvo) throws Exception;
 		
