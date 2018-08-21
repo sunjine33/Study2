@@ -1,6 +1,6 @@
 package com.sunjine33.controller;
 
-import static org.junit.Assert.*;
+
 
 import javax.inject.Inject;
 
