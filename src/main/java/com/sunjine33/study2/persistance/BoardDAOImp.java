@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.sunjine33.study2.domain.BoardVO;
+import com.sunjine33.study2.domain.Criteria;
 
 @Repository
 public class BoardDAOImp implements BoardDAO{
@@ -21,6 +22,8 @@ public class BoardDAOImp implements BoardDAO{
 	private static final String UPDATE = namespace + ".update";
 	private static final String DELETE = namespace + ".delete";
 	private static final String LISTALL = namespace + ".listAll";
+	private static final String LISTPAGE = namespace + ".listPage";
+	private static final String CRITERIA = namespace + ".criteria";
 	private static final String GETMAXBNO = namespace + ".getMaxbno";
 	
 	@Override
@@ -47,11 +50,27 @@ public class BoardDAOImp implements BoardDAO{
 	public List<BoardVO> listAll() throws Exception {
 		return sqlsession.selectList(LISTALL);
 	}
+	
+	@Override
+	public List<BoardVO> listPage(int page) throws Exception {
+		if(page <= 0)
+			page = 1;
+		page = (page - 1) * 10;
+		return sqlsession.selectList(LISTPAGE, page);
+	}
+
 
 	@Override
 	public Integer getMaxbno() throws Exception {
 		
 		return sqlsession.selectOne(GETMAXBNO);
 	}
+
+	@Override
+	public List<BoardVO> listCriteria(Criteria criteria) throws Exception {
+		return sqlsession.selectList(CRITERIA, criteria);
+	}
+
+
 
 }
