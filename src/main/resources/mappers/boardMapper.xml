@@ -43,6 +43,11 @@
 	order by bno desc, regdate desc limit #{pageStart}, #{perPageNum}
 	</select>
 	
+	<select id="countpaging" resultType="Integer">
+	select count(bno) from tbl_board
+	</select>
+	
+	
 	<select id="getMaxbno" resultType="Integer">
 	select max(bno) from tbl_board
 	</select>

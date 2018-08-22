@@ -48,6 +48,11 @@ public class BoardServiceImp implements BoardService{
 		
 		return dao.listCriteria(criteria);
 	}
+
+	@Override
+	public int countPaging(Criteria criteria) {
+		return dao.countpaging(criteria);
+	}
 	
 	
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sunjine33.study2.domain.BoardVO;
+import com.sunjine33.study2.domain.Criteria;
+import com.sunjine33.study2.domain.PageMaker;
 import com.sunjine33.study2.service.BoardService;
 
 @Controller
@@ -82,6 +84,19 @@ public class BoardController {
 		logger.info(">>>>>> show listAll");
 		List<BoardVO> board = service.listall();
 		model.addAttribute("listAll", board);
+	}
+	
+	@RequestMapping(value="/listPage", method=RequestMethod.GET)
+	public void listPage(Criteria criteria, Model model) throws Exception{
+		logger.info(">>>>>> show criteria", criteria);
+		List<BoardVO> board = service.listCriteria(criteria);
+		model.addAttribute("listPage", board);
+		
+		PageMaker pagemaker = new PageMaker();
+		pagemaker.setCriteria(criteria);
+		int totalCount = service.countPaging(criteria);
+		pagemaker.setTotalCount(totalCount);
+		model.addAttribute("listPage!", pagemaker);
 	}
 	
 	

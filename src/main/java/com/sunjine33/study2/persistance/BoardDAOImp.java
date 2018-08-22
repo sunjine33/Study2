@@ -24,6 +24,7 @@ public class BoardDAOImp implements BoardDAO{
 	private static final String LISTALL = namespace + ".listAll";
 	private static final String LISTPAGE = namespace + ".listPage";
 	private static final String CRITERIA = namespace + ".criteria";
+	private static final String COUNT_PAGING = namespace + ".countpaging";
 	private static final String GETMAXBNO = namespace + ".getMaxbno";
 	
 	@Override
@@ -69,6 +70,11 @@ public class BoardDAOImp implements BoardDAO{
 	@Override
 	public List<BoardVO> listCriteria(Criteria criteria) throws Exception {
 		return sqlsession.selectList(CRITERIA, criteria);
+	}
+
+	@Override
+	public int countpaging(Criteria criteria) {
+		return sqlsession.selectOne(COUNT_PAGING);
 	}
 
 

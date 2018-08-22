@@ -15,4 +15,5 @@ public interface BoardDAO {
 	 List<BoardVO> listPage(int page)throws Exception;
 	 List<BoardVO> listCriteria(Criteria criteria)throws Exception;
 	 Integer getMaxbno()throws Exception;
+	 int countpaging(Criteria criteria);
 }

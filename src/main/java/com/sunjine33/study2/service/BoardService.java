@@ -17,4 +17,6 @@ public interface BoardService {
 		List<BoardVO> listall() throws Exception;
 		
 		List<BoardVO> listCriteria(Criteria criteria) throws Exception;
+
+		int countPaging(Criteria criteria);
 }
