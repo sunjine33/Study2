@@ -20,7 +20,15 @@
 	</c:when>
 </c:choose>
 
-
+<section class="content text-right">
+	<div class="row">
+		<select id="perPageSel">
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+		</select> <a href="/board/register" class="btn btn-primary">글쓰기</a>
+	</div>
+</section>
 
 <table class="table table-bordered text-center">
 	<tr>
@@ -44,28 +52,71 @@
 
 </table>
 
-	<div class="text-center">
-	<ul class="pagination">
-		<c:if test="${pagemaker.prev}">
-			<li><a href="listPage?page=${pagemaker.startPage - 1 }">&laquo;</a></li>
-		</c:if>
-		
-		<c:forEach begin="${pagemaker.startPage }"	end="${pagemaker.endPage }" var="idx">
-		<li <c:out value="${pagemaker.criteriat.page == idx ? 'class=active':''}"/>>
-		<a href="listPage?page=${idx} }">${idx}</a>
-		 </li>
-		 </c:forEach>
-		 <c:if test="${pagemaker.next && pagemaker.endPage > 0 }">
-		<li><a href="listPage?page=${pagemaker.endPage +1}">&raquo;</a></li>
-		</c:if>	
+<div class="text-center">
+	<nav aria-label="loabel_pagination">
+		<ul class="pagination">
+
+			<li id="page-prev"><a
+				href="#" onclick="gogo(${pageMaker.startPage - 1})"
+				aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+
+
+			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
+				var="idx">
+				<li id="page${idx}">
+				<a href="#" onclick="gogo(${idx})">${idx}
+						<span class="sr-only">(current) </span>
+				</a></li>
+			</c:forEach>
+
+
+			<li id="page-next"><a
+				href="#" onclick="gogo(${pageMaker.endPage + 1})" aria-label="next">
+					<span aria-hidden="true">&raquo;</span>
+			</a></li>
+
+		</ul>
+	</nav>
+</div>
+
+<script>
 	
-	</ul>
-	</div>
+function setSelect(){
+	var perPageNum = "${pageMaker.criteria.perPageNum}";
 
+	var $perPageSel = $("#perPageSel");
+	$perPageSel.val(perPageNum).prop("selected", true);
+	
+	var thisPage = '${pageMaker.criteria.page}';
+	$perPageSel.on('change', function() {
+		gogo(thisPage, $perPageSel.val());
+	});
+}
 
-<a href="/board/register">
-	<button class="btn btn-primary">Submit</button>
-</a>
+function gogo(page, perPageNum){
+	perPageNum = perPageNum || $("#perPageSel").val();
+	window.location.href = "listPage?page=" + Page + "&perPageNum=" + $perPageNum;
+}
+
+	
+	$(document).ready(function(){
+		setSelect();
+		
+		var canPrev = '${pageMaker.prev}';
+		if(canPrev !== 'true'){
+			$('#page-prev').addClass('disabled');
+		}
+		
+		var canPrev = '${pageMaker.next}';
+		if(canPrev !== 'true'){
+			$('#page-next').addClass('disabled');
+		}
+		
+		var thisPage = '${pageMaker.criteria.page}';
+		$('#page' + thisPage).addClass('active');
+	});
+	
+</script>
 
 
 <%@include file="../include/footer.jsp"%>

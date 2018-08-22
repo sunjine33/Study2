@@ -96,7 +96,7 @@ public class BoardController {
 		pagemaker.setCriteria(criteria);
 		int totalCount = service.countPaging(criteria);
 		pagemaker.setTotalCount(totalCount);
-		model.addAttribute("listPage!", pagemaker);
+		model.addAttribute(pagemaker);
 	}
 	
 	
