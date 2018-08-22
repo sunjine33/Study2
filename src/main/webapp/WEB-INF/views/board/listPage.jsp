@@ -31,7 +31,7 @@
 		<th style="width: 100px">조회수</th>
 	</tr>
 
-	<c:forEach items="${listAll}" var="board">
+	<c:forEach items="${listPage}" var="board">
 		<tr>
 			<td>${board.bno}</td>
 			<td><a href='/board/read?bno=${board.bno}'>${board.title }</a></td>
@@ -45,23 +45,21 @@
 </table>
 
 	<div class="text-center">
-		<nav aria-label="loabel_pagination">
-			<ul class="pagination">
-			
-				<li class="disabled">
-					<a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-					<li class="active">
-						<a href="#">1 
-							<span class="sr-only">(current)
-							</span>
-						</a>
-					</li>
-				<a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-			</ul>
-		</nav>
+	<ul class="pagination">
+		<c:if test="${pagemaker.prev}">
+			<li><a href="listPage?page=${pagemaker.startPage - 1 }">&laquo;</a></li>
+		</c:if>
+		
+		<c:forEach begin="${pagemaker.startPage }"	end="${pagemaker.endPage }" var="idx">
+		<li <c:out value="${pagemaker.criteriat.page == idx ? 'class=active':''}"/>>
+		<a href="listPage?page=${idx} }">${idx}</a>
+		 </li>
+		 </c:forEach>
+		 <c:if test="${pagemaker.next && pagemaker.endPage > 0 }">
+		<li><a href="listPage?page=${pagemaker.endPage +1}">&raquo;</a></li>
+		</c:if>	
+	
+	</ul>
 	</div>
 
 
