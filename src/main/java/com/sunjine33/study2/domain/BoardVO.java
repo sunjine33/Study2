@@ -9,6 +9,7 @@ public class BoardVO {
 	private String content;
 	private String writer;
 	private Date regdate;
+	private Integer page;
 	
 	private int viewcnt;
 

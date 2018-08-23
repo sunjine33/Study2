@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,36 +48,40 @@ public class BoardController {
 		
 //		return  "/board/success";
 		rttr.addFlashAttribute("msg", "success");
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public void modifyGet(@RequestParam("bno") Integer bno, Model model) throws Exception{
+	public void modifyGet(@RequestParam("bno") Integer bno,@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception{
 		BoardVO boardvo = service.read(bno);
 		model.addAttribute(boardvo);
 		logger.info(">>>> board.read: {}", boardvo);
 	}
 	
 	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyPOST(BoardVO boardvo, RedirectAttributes rttr) throws Exception{
+	public String modifyPOST(BoardVO boardvo, Criteria criteria, RedirectAttributes rttr) throws Exception{
 		logger.info("modify post .............");
 		service.modify(boardvo);
 		rttr.addFlashAttribute("msg", "save-ok");
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		return "redirect:/board/read?bno=" + boardvo.getBno();
 	}
 	
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public void read(@RequestParam("bno") Integer bno, Model model) throws Exception{
+	public void read(@RequestParam("bno") Integer bno,@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception{
 		BoardVO boardvo = service.read(bno);
 		model.addAttribute(boardvo);
 		logger.info(">>>> board.read: {}", boardvo);
 	}
 	
 	@RequestMapping(value="/remove", method=RequestMethod.GET)
-	public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) throws Exception{
+	public String remove(@RequestParam("bno") Integer bno, Criteria criteria, RedirectAttributes rttr) throws Exception{
 		service.remove(bno);
 		rttr.addFlashAttribute("msg", "remove-ok");
-		return "redirect:/board/listAll";
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)

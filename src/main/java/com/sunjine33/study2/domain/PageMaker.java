@@ -1,5 +1,7 @@
 package com.sunjine33.study2.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
 	private int displaypageNum = 5;
@@ -11,6 +13,17 @@ public class PageMaker {
 	private boolean next;
 
 	private Criteria criteria;
+	
+	public String makeQuery(int page) {
+		return UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", criteria.getPerPageNum())
+				.queryParam("searchType", criteria.getSearchType())
+				.queryParam("keyword", criteria.getKeyword())
+				.build().encode().toUriString();
+				
+		
+	}
 
 	public int getDisplaypageNum() {
 		return displaypageNum;

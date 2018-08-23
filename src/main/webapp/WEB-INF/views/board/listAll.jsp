@@ -20,6 +20,16 @@
 	</c:when>
 </c:choose>
 
+<section class="content text-right">
+	<div class="row">
+		<select id="perPageSel">
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+		</select> <a href="/board/register" class="btn btn-primary">글쓰기</a>
+	</div>
+</section>
+
 <table class="table table-bordered text-center">
 	<tr>
 		<th style="width: 10px">BNO</th>
@@ -40,9 +50,6 @@
 		</tr>
 	</c:forEach>
 </table>
-<a href="/board/register">
-	<button class="btn btn-primary">Submit</button>
-</a>
 
 
 <%@include file="../include/footer.jsp"%>

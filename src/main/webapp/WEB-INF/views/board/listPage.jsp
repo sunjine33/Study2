@@ -14,22 +14,29 @@
 	<c:when test="${msg eq 'success'}">
 		<h1 class="text-center">등록이 완료되었습니다.</h1>
 	</c:when>
-
 	<c:when test="${msg eq 'remove-ok'}">
 		<h1 class="text-center">삭제가 완료되었습니다.</h1>
 	</c:when>
 </c:choose>
-
-<section class="content text-right">
+<div class="content" >
 	<div class="row">
-		<select id="perPageSel">
-			<option value="10">10</option>
-			<option value="20">20</option>
-			<option value="50">50</option>
-		</select> <a href="/board/register" class="btn btn-primary">글쓰기</a>
+		<div class="col-md-8 text-left">
+			<form class="form-inline">
+				<input type="text" id="keyword" name="keyword"
+					value="${pageMaker.criteria.keyword}" placeholder="검색어를 입력하세요."
+					class="form-control" />
+				<button class="btn btn-primary">Search</button>
+			</form>
+		</div>
+		<div class="col-md-4 text-right">
+			<select id="perPageSel">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+			</select> <a href="/board/register" class="btn btn-primary">글쓰기</a>
+		</div>
 	</div>
-</section>
-
+</div>
 <table class="table table-bordered text-center">
 	<tr>
 		<th style="width: 10px">BNO</th>
@@ -38,11 +45,11 @@
 		<th>등록일시</th>
 		<th style="width: 100px">조회수</th>
 	</tr>
-
 	<c:forEach items="${listPage}" var="board">
 		<tr>
 			<td>${board.bno}</td>
-			<td><a href='/board/read?bno=${board.bno}'>${board.title }</a></td>
+			<td><a
+				href="/board/read${pageMaker.makeQuery(pageMaker.criteria.page)}&bno=${board.bno}">${board.title}</a></td>
 			<td>${board.writer }</td>
 			<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm"
 					value="${board.regdate }" /></td>
@@ -56,23 +63,24 @@
 	<nav aria-label="loabel_pagination">
 		<ul class="pagination">
 
-			<li id="page-prev"><a
-				href="#" onclick="gogo(${pageMaker.startPage - 1})"
-				aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+			<li id="page-prev"><a href="listpage${ pageMaker.startPage}"
+				onclick="gogo(${pageMaker.startPage - 1})" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+			</a></li>
 
 
 			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
 				var="idx">
-				<li id="page${idx}">
-				<a href="#" onclick="gogo(${idx})">${idx}
+				<li id="page${idx}"><a
+					href="listPage${pageMaker.makeQuery(idx)}" onclick="gogo(${idx})">${idx}
 						<span class="sr-only">(current) </span>
 				</a></li>
 			</c:forEach>
 
 
-			<li id="page-next"><a
-				href="#" onclick="gogo(${pageMaker.endPage + 1})" aria-label="next">
-					<span aria-hidden="true">&raquo;</span>
+			<li id="page-next"><a href="listpage${ pageMaker.endPage }"
+				onclick="gogo(${pageMaker.endPage + 1})" aria-label="next"> <span
+					aria-hidden="true">&raquo;</span>
 			</a></li>
 
 		</ul>
@@ -87,7 +95,7 @@ function setSelect(){
 	var $perPageSel = $("#perPageSel");
 	$perPageSel.val(perPageNum).prop("selected", true);
 	
-	var thisPage = '${pageMaker.criteria.page}';
+	var thisPage = "${pageMaker.criteria.page}";
 	$perPageSel.on('change', function() {
 		gogo(thisPage, $perPageSel.val());
 	});
@@ -95,7 +103,7 @@ function setSelect(){
 
 function gogo(page, perPageNum){
 	perPageNum = perPageNum || $("#perPageSel").val();
-	window.location.href = "listPage?page=" + Page + "&perPageNum=" + $perPageNum;
+	window.location.href = "listPage?page=" + page + "&perPageNum=" + $perPageNum;
 }
 
 	
@@ -114,8 +122,7 @@ function gogo(page, perPageNum){
 		
 		var thisPage = '${pageMaker.criteria.page}';
 		$('#page' + thisPage).addClass('active');
-	});
-	
+	});	
 </script>
 
 

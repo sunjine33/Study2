@@ -2,7 +2,6 @@ package com.sunjine33.service;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import javax.inject.Inject;
 

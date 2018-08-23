@@ -10,6 +10,16 @@
 
 <%@include file="../include/header.jsp"%>
 
+<section class="content text-right">
+	<div class="row">
+		<select id="perPageSel">
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+		</select> <a href="/board/register" class="btn btn-primary">글쓰기</a>
+	</div>
+</section>
+
 <c:choose>
 	<c:when test="${msg eq 'success'}">
 		<h1 class="text-center">등록이 완료되었습니다.</h1>
@@ -40,9 +50,7 @@
 		</tr>
 	</c:forEach>
 </table>
-<a href="/board/register">
-	<button class="btn btn-primary">Submit</button>
-</a>
+
 
 
 <%@include file="../include/footer.jsp"%>

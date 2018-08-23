@@ -5,7 +5,7 @@
 
 	
 
-	<form role="form" action="/board/modify" method="post">
+	<form role="form" action="/board/modify${criteria.makeQuery()}" method="post">
 	 <input type="hidden" name='bno' value="${boardVO.bno}" />
 		<div class="box-body">
 			<div class="form-group">
@@ -22,7 +22,8 @@
 		</div>
 
 		<div class="box-footer">
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-danger">수정</button>
+			<a href="/board/read${criteria.makeQuery()}&bno=${boardVO.bno}" class="btn btn-primary">취소</a>
 		</div>
 	</form>
 	

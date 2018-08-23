@@ -37,8 +37,8 @@
 
 <div class="box-footer text-center">
 	<button id="btn-remove" class="btn btn-danger">삭제</button> 
-	<a href="/board/modify?bno=${boardVO.bno}" class="btn btn-primary">수정</a>
-	<a href="/board/listAll" class="btn btn-default">목록</a>
+	<a href="/board/modify${criteria.makeQuery()}&bno=${boardVO.bno}" class="btn btn-primary">수정</a>
+	<a href="/board/listPage${criteria.makeQuery()}" class="btn btn-default">목록</a>
 </div>
 </session>
 
@@ -46,7 +46,7 @@
 		$(document).ready(function(){
 			$('#btn-remove').on('click', function(){
 				if(confirm("정말 삭제하시겠습니까?")){
-					self.location.href= "/board/remove?bno=${boardVO.bno}";
+					self.location.href= "/board/remove${criteria.makeQuery()}&bno=${boardVO.bno}";
 				}
 			});
 		});

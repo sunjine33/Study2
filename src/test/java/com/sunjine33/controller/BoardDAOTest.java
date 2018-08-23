@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sunjine33.study2.domain.BoardVO;
 import com.sunjine33.study2.domain.Criteria;
@@ -40,7 +42,24 @@ public class BoardDAOTest {
 
 		}
 	}
-
+	
+	@Test
+	public void tesetURI()throws Exception{
+		int bno = 84;
+		int PerPageNum = 15;
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.path("/board/read")
+				.queryParam("bno", bno)
+				.queryParam("perPageNum", PerPageNum)
+				.build();
+		
+		String uri = ".board/read?bno=" + bno + "$perPageNum=" + PerPageNum;
+		logger.info(uri );
+		logger.info(uri, uriComponents.toString());
+		
+	}
+	
+	@Test
 	public void testCreate() throws Exception {
 		BoardVO boardvo = dummyBoard("새 글", "새 글");
 		boardvo.setWriter("user00");

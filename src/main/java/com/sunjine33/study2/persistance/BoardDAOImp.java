@@ -54,8 +54,9 @@ public class BoardDAOImp implements BoardDAO{
 	
 	@Override
 	public List<BoardVO> listPage(int page) throws Exception {
-		if(page <= 0)
+		if(page <= 0) {
 			page = 1;
+		}
 		page = (page - 1) * 10;
 		return sqlsession.selectList(LISTPAGE, page);
 	}
