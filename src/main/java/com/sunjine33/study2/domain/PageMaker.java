@@ -15,13 +15,22 @@ public class PageMaker {
 	private Criteria criteria;
 	
 	public String makeQuery(int page) {
-		return UriComponentsBuilder.newInstance()
+		return makeQuery(page, true);
+	}
+	
+	public String makeQuery(int page, boolean needSearchParam) {
+		UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
+				uriComponentsBuilder
 				.queryParam("page", page)
-				.queryParam("perPageNum", criteria.getPerPageNum())
-				.queryParam("searchType", criteria.getSearchType())
+				.queryParam("perPageNum", criteria.getPerPageNum());
+
+				if(needSearchParam) {
+				uriComponentsBuilder
 				.queryParam("keyword", criteria.getKeyword())
-				.build().encode().toUriString();
+				.queryParam("searchType", criteria.getSearchType());
+				}
 				
+				return uriComponentsBuilder.build().encode().toString();
 		
 	}
 

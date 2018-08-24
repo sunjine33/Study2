@@ -9,7 +9,7 @@
 
 
 <%@include file="../include/header.jsp"%>
-
+<section id = "section">
 <c:choose>
 	<c:when test="${msg eq 'success'}">
 		<h1 class="text-center">등록이 완료되었습니다.</h1>
@@ -21,12 +21,20 @@
 <div class="content" >
 	<div class="row">
 		<div class="col-md-8 text-left">
-			<form class="form-inline">
+			<div class="form-inline">
+			<select id="searchType">
+				<option value="">검색조건이 없음</option>
+				<option value="t">제목으로 검색</option>
+				<option value="c">내용으로 검색</option>
+				<option value="w">작성자로 검색</option>
+				<option value="tc">제목이나 내용으로 검색</option>
+				<option value="a">전체</option>
+			</select>
 				<input type="text" id="keyword" name="keyword"
 					value="${pageMaker.criteria.keyword}" placeholder="검색어를 입력하세요."
 					class="form-control" />
-				<button class="btn btn-primary">Search</button>
-			</form>
+				<button id="searchBtn" class="btn btn-primary">Search</button>
+			</div>
 		</div>
 		<div class="col-md-4 text-right">
 			<select id="perPageSel">
@@ -86,7 +94,7 @@
 		</ul>
 	</nav>
 </div>
-
+</section>
 <script>
 	
 function setSelect(){
@@ -122,6 +130,31 @@ function gogo(page, perPageNum){
 		
 		var thisPage = '${pageMaker.criteria.page}';
 		$('#page' + thisPage).addClass('active');
+		
+		
+		$('#searchBtn').on('click',function(event){
+			event.preventDefault();
+				var $searchType = $("#searchType");
+				var $keyWord = $("#keyword");
+				
+				var keyWordStr = $keyWord.val();
+				var searchTypeStr = $searchType.val();
+				if(!searchTypeStr){
+					alert("검색조건을 선택하세요.");
+					$searchType.focus();
+					return;
+				}else if(!keyWordStr){
+					alert("검색어를 입력하세요.");
+					$keyWord.focus();
+					return;
+				}
+				
+				var url = "listPage${pageMaker.makeQuery(1,false)}"
+				+"&searchType=" + searchTypeStr
+				+"&keyword=" + encodeURIComponent(keyWordStr);
+				console.log(">>search.url=",url)
+				window.location.href=url;
+		});
 	});	
 </script>
 

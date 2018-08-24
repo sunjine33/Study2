@@ -66,4 +66,10 @@ public class Criteria {
 				.build().encode().toString();
 	}
 
+	@Override
+	public String toString() {
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", searchType=" + searchType + ", keyword="
+				+ keyword + "]";
+	}
+
 }

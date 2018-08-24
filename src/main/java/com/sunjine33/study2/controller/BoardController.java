@@ -93,14 +93,16 @@ public class BoardController {
 	
 	@RequestMapping(value="/listPage", method=RequestMethod.GET)
 	public void listPage(Criteria criteria, Model model) throws Exception{
-		logger.info(">>>>>> show criteria", criteria);
+		logger.info(">>>>>> show criteria {}", criteria);
 		List<BoardVO> board = service.listCriteria(criteria);
+		
 		model.addAttribute("listPage", board);
 		
 		PageMaker pagemaker = new PageMaker();
 		pagemaker.setCriteria(criteria);
 		int totalCount = service.countPaging(criteria);
 		pagemaker.setTotalCount(totalCount);
+		logger.debug("totalCount=" + totalCount);
 		model.addAttribute(pagemaker);
 	}
 	
